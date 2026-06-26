@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+button,a,.nd,.flower-pick,.balloon-scene,.cake-svg-wrap,.photo-zone{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 :root{
   --rose:#C9607A;--rose-soft:#E8A0B0;--rose-pale:#F9EEF1;--rose-bg:#FDF5F7;
   --lav:#A888B5;--lav-pale:#F0EAF5;--sand:#C4A882;
@@ -97,7 +98,7 @@ textarea.f-input{min-height:80px;resize:vertical;line-height:1.6}
 #s2{background:linear-gradient(160deg,#FFF5F7 0%,#F8F0FD 100%)}
 .s2-label{font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--rose-soft);margin-bottom:12px}
 .s2-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,4vw,2.2rem);color:var(--dark);margin-bottom:32px;font-weight:300}
-.cake-svg-wrap{cursor:pointer;transition:transform .1s}
+.cake-svg-wrap{cursor:pointer;transition:transform .1s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .cake-svg-wrap:active{transform:scale(.97)}
 .flame-outer{animation:flicker1 .18s ease-in-out infinite alternate;transform-origin:50% 100%}
 .flame-inner{animation:flicker2 .22s ease-in-out infinite alternate;transform-origin:50% 100%}
@@ -128,7 +129,7 @@ textarea.f-input{min-height:80px;resize:vertical;line-height:1.6}
 .s4-label{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--rose-soft);margin-bottom:10px}
 .s4-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,4.5vw,2.2rem);color:var(--dark);margin-bottom:36px;font-weight:300}
 .flowers-row{display:flex;gap:36px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
-.flower-pick{display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer}
+.flower-pick{display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;padding:10px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .flower-svg{transition:transform .25s cubic-bezier(.34,1.56,.64,1);display:block}
 .flower-pick:hover .flower-svg{transform:scale(1.12)}
 .flower-pick.picked .flower-svg{transform:scale(1.2)}
@@ -143,7 +144,7 @@ textarea.f-input{min-height:80px;resize:vertical;line-height:1.6}
 .s5-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.4rem,4vw,2rem);color:var(--dark);margin-bottom:28px;font-weight:300}
 
 /* Balloon SVG */
-.balloon-scene{position:relative;cursor:pointer;display:inline-block}
+.balloon-scene{position:relative;cursor:pointer;display:inline-block;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .balloon-svg{filter:drop-shadow(0 12px 28px rgba(0,0,0,.12));transition:transform .3s ease}
 .balloon-scene:hover .balloon-svg{transform:scale(1.04) rotate(2deg)}
 .balloon-string{animation:sway 3s ease-in-out infinite}
@@ -254,38 +255,9 @@ textarea.f-input{min-height:80px;resize:vertical;line-height:1.6}
       <div class="upload-progress" id="uploadProgress"></div>
     </div>
 
-    <hr class="rule">
-    <div class="f-section">Discount Code</div>
-    <div class="f-group">
-      <label class="f-label">Code <span style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--light)">(try LOVE20 or BDAY50)</span></label>
-      <div class="disc-row">
-        <input class="f-input" id="discCode" type="text" placeholder="Enter code">
-        <button class="btn-apply" onclick="applyDiscount()">Apply</button>
-      </div>
-      <div class="disc-msg" id="discMsg"></div>
-    </div>
+    <button class="btn-pay" onclick="previewSite()">Continue to the Experience</button>
 
-    <div class="price-row">
-      <div>
-        <div class="price-label">Total</div>
-        <div class="price-note">Recipient receives link for free</div>
-      </div>
-      <div style="display:flex;align-items:baseline;gap:4px">
-        <span class="price-val" id="priceVal">&#8377;99</span>
-        <span class="price-old" id="priceOld">&#8377;99</span>
-      </div>
-    </div>
-
-    <button class="btn-preview" onclick="previewSite()">Preview Experience First</button>
-    <button class="btn-pay" onclick="initiatePayment()">Pay &amp; Send the Magic</button>
-
-    <div class="success-box" id="successBox">
-      <div class="success-title">Your magic link is ready</div>
-      <p style="font-size:.82rem;color:var(--mid);margin-bottom:8px">Share with <span id="succRecip" style="color:var(--rose);font-weight:500"></span> — no payment on their end</p>
-      <div class="link-box" id="genLink"></div>
-      <button class="btn-copy" onclick="copyLink()">Copy Link</button>
-    </div>
-    <div class="secured">Secured by Razorpay</div>
+    <div class="secured" style="opacity:.7">Payment happens only at the very end</div>
   </div>
 </div>
 
@@ -442,6 +414,15 @@ textarea.f-input{min-height:80px;resize:vertical;line-height:1.6}
         <div class="pay-summary-amount" id="paySummaryAmt">&#8377;99</div>
       </div>
 
+      <div class="f-group" style="text-align:left">
+        <label class="f-label">Discount Code <span style="text-transform:none;letter-spacing:0;font-weight:300;color:var(--light)">(try LOVE20 or BDAY50)</span></label>
+        <div class="disc-row">
+          <input class="f-input" id="discCode" type="text" placeholder="Enter code">
+          <button class="btn-apply" onclick="applyDiscount()">Apply</button>
+        </div>
+        <div class="disc-msg" id="discMsg"></div>
+      </div>
+
       <div id="payForm">
         <button class="btn-final-pay" id="payBtnFinal" onclick="finalPay()">Pay &amp; Get Link</button>
         <div class="pay-error" id="payError" style="display:none"></div>
@@ -460,6 +441,12 @@ textarea.f-input{min-height:80px;resize:vertical;line-height:1.6}
 </div><!-- /bsite -->
 
 <script>
+/* Fix for a well-known mobile-browser quirk: elements that only change
+   appearance on :hover sometimes need two taps to register a click on
+   touchscreens (first tap simulates hover, second tap fires click).
+   Registering an empty touchstart listener makes the first tap count. */
+document.addEventListener('touchstart', function(){}, {passive:true});
+
 /* ── Supabase config ── */
 const SUPA_URL  = 'https://emwrmevhrplsxrmchzhp.supabase.co';
 const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtd3JtZXZocnBsc3hybWNoemhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5ODY0MTYsImV4cCI6MjA5NzU2MjQxNn0.Pz-2LXICkK2lPEdFfZhAVixWCcjgbJAKxw7jze7lLXA';
@@ -470,8 +457,8 @@ const BASE = 99;
 const CODES = {LOVE20:{pct:20,msg:'20% off'},BDAY50:{pct:50,msg:'50% off'},CUTE10:{pct:10,msg:'10% off'},MAHII:{pct:100,msg:'Free for you'}};
 /* TODO: replace with YOUR real Razorpay Key ID — Settings → API Keys in the Razorpay dashboard.
    Test keys start with rzp_test_, live keys with rzp_live_. The placeholder below will never work. */
-const RAZORPAY_KEY_ID = rzp_live_Sz9gct8RO5E1jB;
-let disc=0, finalPrice=BASE, candleDone=false, balloonDone=false;
+const RAZORPAY_KEY_ID = 'rzp_live_Sz9gct8RO5E1jB;
+let disc=0, finalPrice=BASE, candleDone=false, balloonDone=false, wishPicked=false, wishAdvanceTimer=null;
 let uploadedPhotoUrl='', selectedFile=null, builderData={};
 let razorpayScriptLoading=false;
 const TOTAL_SLIDES=6;
@@ -564,7 +551,8 @@ function loadBday(d, isRecipient=false){
     ? '' : 'You just experienced everything they will feel. Pay once to unlock the shareable link.';
   document.getElementById('paySuccessRecip').textContent = d.recip;
 
-  candleDone=false; balloonDone=false;
+  candleDone=false; balloonDone=false; wishPicked=false;
+  if(wishAdvanceTimer){clearTimeout(wishAdvanceTimer); wishAdvanceTimer=null;}
 
   // On recipient view hide payment slide (replace with a finale)
   if(isRecipient){
@@ -646,18 +634,24 @@ function showPhotoReveal(){
     container.innerHTML = `<div class="photo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="#E8A0B0" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 3a4 4 0 100 8 4 4 0 000-8z"/></svg><p style="color:var(--light);font-size:.7rem;margin-top:8px;letter-spacing:.5px">With love</p></div>`;
   }
   wrap.style.display='flex';
-  setTimeout(()=>nextSlide(), 4000);
 }
 
 /* ── Flower pick ── */
 function pickFlower(el,idx){
   document.querySelectorAll('.flower-pick').forEach(f=>f.classList.remove('picked'));
   el.classList.add('picked');
+  wishPicked=true;
+  // Next is now allowed manually too, since a wish has been made
+  const nb=document.getElementById('nextBtn');
+  if(cur===3){ nb.style.display=''; nb.textContent='Next'; nb.onclick=nextSlide; }
   const r=el.getBoundingClientRect();
   burst(r.left+38,r.top+38,'#C9607A');
   const wEl=document.getElementById('wishOut');
   wEl.textContent=el.dataset.wish; wEl.classList.add('show');
-  setTimeout(()=>nextSlide(),1800);
+  // If the person taps a different flower before the auto-advance fires,
+  // cancel the previous timer instead of letting both fire and skip a slide.
+  if(wishAdvanceTimer) clearTimeout(wishAdvanceTimer);
+  wishAdvanceTimer=setTimeout(()=>{wishAdvanceTimer=null; nextSlide();},1800);
 }
 
 /* ── Particle burst ── */
@@ -690,6 +684,9 @@ function goTo(idx){
   // On last slide hide Next
   if(idx===TOTAL_SLIDES-1){
     nb.style.display='none';
+  } else if(idx===3 && !wishPicked){
+    // Wishes slide: don't let people skip ahead without picking a flower first
+    nb.style.display='none';
   } else {
     nb.style.display='';
     nb.textContent='Next';
@@ -702,17 +699,14 @@ function prevSlide(){if(cur>0)goTo(cur-1);}
 /* ── Discount ── */
 function applyDiscount(){
   const code=document.getElementById('discCode').value.trim().toUpperCase();
-  const el=document.getElementById('discMsg'), po=document.getElementById('priceOld'), pv=document.getElementById('priceVal');
+  const el=document.getElementById('discMsg');
   if(CODES[code]){
     disc=CODES[code].pct; finalPrice=Math.round(BASE*(1-disc/100));
-    el.textContent='Applied — '+CODES[code].msg; el.style.color='#22c55e';
-    po.textContent='&#8377;'+BASE; po.style.display='inline';
-    pv.textContent=finalPrice===0?'Free':'&#8377;'+finalPrice;
+    el.textContent='Applied — '+CODES[code].msg+' (applies at checkout)'; el.style.color='#22c55e';
     document.getElementById('paySummaryAmt').innerHTML=finalPrice===0?'Free':'&#8377;'+finalPrice;
   } else if(code){
     el.textContent='Invalid code'; el.style.color='#ef4444';
-    disc=0; finalPrice=BASE; po.style.display='none';
-    pv.innerHTML='&#8377;'+BASE;
+    disc=0; finalPrice=BASE;
     document.getElementById('paySummaryAmt').innerHTML='&#8377;'+BASE;
   }
 }
@@ -732,20 +726,6 @@ async function previewSite(){
   // Use local preview URL for photo (not yet uploaded)
   const previewPhoto = selectedFile ? document.getElementById('photoPreviewImg').src : '';
   loadBday({...d, photo: previewPhoto}, false);
-}
-
-/* ── Pay button on builder (same as preview but triggers payment after) ── */
-async function initiatePayment(){
-  const d=getData();
-  if(!d.sender||!d.recip||!d.msg){alert('Please fill in all fields.');return;}
-  // upload photo first
-  const prog=document.getElementById('uploadProgress');
-  prog.style.color=getComputedStyle(document.documentElement).getPropertyValue('--rose').trim();
-  const photoUrl = await uploadPhoto();
-  builderData={...d, photo: photoUrl};
-  loadBday(builderData, false);
-  // override last slide to show payment
-  // (s6 will handle payment inline)
 }
 
 /* ── Payment button UI helpers ── */
@@ -851,32 +831,16 @@ async function finalPay(){
 function showFinalSuccess(d){
   const photoParam = d.photo ? '&photo='+encodeURIComponent(d.photo) : '';
   const link = location.href.split('?')[0]+'?view=1&to='+encodeURIComponent(d.recip)+'&from='+encodeURIComponent(d.sender)+'&msg='+encodeURIComponent(d.msg)+photoParam;
-  document.getElementById('paySuccessLink').textContent = link;
+  const linkBox = document.getElementById('paySuccessLink');
+  linkBox.innerHTML = '<a href="'+link+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;word-break:break-all">'+link+'</a>';
   document.getElementById('payForm').style.display='none';
   document.getElementById('paySuccessInner').style.display='block';
-  // also update builder success box if visible
-  document.getElementById('genLink').textContent=link;
-  document.getElementById('succRecip').textContent=d.recip;
+  document.getElementById('paySuccessRecip').textContent=d.recip;
 }
 
 function copyFinalLink(){
   navigator.clipboard.writeText(document.getElementById('paySuccessLink').textContent)
     .then(()=>{const b=document.querySelector('.btn-copy-s');b.textContent='Copied';setTimeout(()=>b.textContent='Copy Link',2000);});
-}
-function copyLink(){
-  navigator.clipboard.writeText(document.getElementById('genLink').textContent)
-    .then(()=>{const b=document.querySelector('.btn-copy');b.textContent='Copied';setTimeout(()=>b.textContent='Copy Link',2000);});
-}
-
-/* ── Also handle builder success box (keep for edge cases) ── */
-function showSuccess(d){
-  const photoParam = d.photo ? '&photo='+encodeURIComponent(d.photo) : '';
-  const link=location.href.split('?')[0]+'?view=1&to='+encodeURIComponent(d.recip)+'&from='+encodeURIComponent(d.sender)+'&msg='+encodeURIComponent(d.msg)+photoParam;
-  document.getElementById('genLink').textContent=link;
-  document.getElementById('succRecip').textContent=d.recip;
-  document.getElementById('successBox').style.display='block';
-  document.querySelector('.btn-pay').style.display='none';
-  document.querySelector('.btn-preview').style.display='none';
 }
 </script>
 </body>
