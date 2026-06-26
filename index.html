@@ -7,7 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-button,a,.nd,.flower-pick,.balloon-scene,.cake-svg-wrap,.photo-zone{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button,a{-webkit-tap-highlight-color:transparent}
+.nd,.flower-pick,.balloon-scene,.cake-svg-wrap,.photo-zone{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 :root{
   --rose:#C9607A;--rose-soft:#E8A0B0;--rose-pale:#F9EEF1;--rose-bg:#FDF5F7;
   --lav:#A888B5;--lav-pale:#F0EAF5;--sand:#C4A882;
@@ -457,7 +458,7 @@ const BASE = 99;
 const CODES = {LOVE20:{pct:20,msg:'20% off'},BDAY50:{pct:50,msg:'50% off'},CUTE10:{pct:10,msg:'10% off'},MAHII:{pct:100,msg:'Free for you'}};
 /* TODO: replace with YOUR real Razorpay Key ID — Settings → API Keys in the Razorpay dashboard.
    Test keys start with rzp_test_, live keys with rzp_live_. The placeholder below will never work. */
-const RAZORPAY_KEY_ID = 'rzp_live_Sz9gct8RO5E1jB;
+const RAZORPAY_KEY_ID = rzp_live_Sz9gct8RO5E1jB;
 let disc=0, finalPrice=BASE, candleDone=false, balloonDone=false, wishPicked=false, wishAdvanceTimer=null;
 let uploadedPhotoUrl='', selectedFile=null, builderData={};
 let razorpayScriptLoading=false;
@@ -721,12 +722,25 @@ function getData(){
 
 /* ── Preview: show experience, payment is at end ── */
 async function previewSite(){
-  const d=getData();
-  if(!d.sender||!d.recip||!d.msg){alert('Please fill in all three fields first.');return;}
-  // Use local preview URL for photo (not yet uploaded)
-  const previewPhoto = selectedFile ? document.getElementById('photoPreviewImg').src : '';
-  loadBday({...d, photo: previewPhoto}, false);
+  try{
+    const d=getData();
+    if(!d.sender||!d.recip||!d.msg){alert('Please fill in all three fields first.');return;}
+    // Use local preview URL for photo (not yet uploaded)
+    const previewPhoto = selectedFile ? document.getElementById('photoPreviewImg').src : '';
+    loadBday({...d, photo: previewPhoto}, false);
+  }catch(e){
+    console.error('previewSite error:',e);
+    alert('Something went wrong starting the preview: '+e.message);
+  }
 }
+
+// Belt-and-suspenders: bind the Continue button via JS too, in case the
+// inline onclick attribute is ever stripped or blocked by deployment config.
+// This script runs at the end of <body>, so the button already exists.
+(function(){
+  const cb=document.querySelector('#builder .btn-pay');
+  if(cb) cb.addEventListener('click',previewSite);
+})();
 
 /* ── Payment button UI helpers ── */
 function setPayBtnLoading(isLoading,label){
